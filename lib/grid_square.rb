@@ -29,8 +29,8 @@ class GridSquare
     @origin = Location.new -180.0, -90.0
     @size = Location.new 360.0, 180.0
 
-    bases = [[?A.ord,18], ["0".ord,10], [?A.ord,24], ["0".ord, 10]]
-    loc = @grid_reference.dup
+    bases = [[?A.ord,18], ["0".ord,10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10]]
+    loc = @grid_reference.dup.upcase
     while loc.length > 0
       lng, lat, loc = loc.split(//, 3)
       base, size = *bases.shift

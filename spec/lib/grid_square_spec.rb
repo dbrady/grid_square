@@ -9,14 +9,14 @@ describe GridSquare do
     Then { grid_square.square.should == "DN41" }
     Then { grid_square.subsquare.should == "DN41bi" }
 
-    Then { grid_square.origin.longitude.should be_within(0.00001).of -109.25 }
-    Then { grid_square.origin.latitude.should be_within(0.00001).of 42.66666 }
+    Then { grid_square.origin.longitude.should be_within(0.00001).of -111.91666 }
+    Then { grid_square.origin.latitude.should be_within(0.00001).of 41.33333 }
 
     Then { grid_square.width.should be_within(0.00001).of 0.083333 }
     Then { grid_square.height.should be_within(0.00001).of 0.041666 }
 
-    Then { grid_square.center.longitude.should be_within(0.00001).of -109.208333 }
-    Then { grid_square.center.latitude.should be_within(0.00001).of 42.687500 }
+    Then { grid_square.center.longitude.should be_within(0.00001).of -111.875 }
+    Then { grid_square.center.latitude.should be_within(0.00001).of 41.35416 }
   end
 
   context "created from square" do
