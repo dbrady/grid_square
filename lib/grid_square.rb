@@ -1,5 +1,6 @@
 require_relative 'location'
 require_relative 'radix_enumerator'
+require_relative 'string_ext'
 
 class GridSquare
   attr_reader :grid_reference, :origin
@@ -29,7 +30,7 @@ class GridSquare
       latitude -= lat * size.latitude
     end
 
-    new downcase_last(grid_reference)
+    new grid_reference.downcase_last
   end
 
   # Maidenhead locator names
@@ -41,19 +42,7 @@ class GridSquare
   # Return code to a given number of 2-digit fields
   def precision(fields)
     raise IndexError.new "GridSquare.square: insufficient precision to index #{fields} fields" unless grid_reference.length >= fields * 2
-    downcase_last grid_reference[0...fields*2]
-  end
-
-  def downcase_last(string)
-    GridSquare.downcase_last string
-  end
-
-  def self.downcase_last(string)
-    if string.length > 4
-      string[0...-4].upcase + string[-4..-1].downcase
-    else
-      string.upcase
-    end
+    grid_reference[0...fields*2].downcase_last
   end
 
   def decode!
