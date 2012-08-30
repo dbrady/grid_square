@@ -1,7 +1,19 @@
 require_relative 'location'
 
+
 class GridSquare
   attr_reader :grid_reference, :origin
+
+  class RadixEnumerator
+    def next
+      if @index.nil?
+        @index = 1
+        [?A.ord, 18]
+      else
+        [["0".ord, 10], [?A.ord, 24]][@index = (@index+1) % 2]
+      end
+    end
+  end
 
   # location can be a string containing a GS reference or a pair
   # containing longitude and latitude.
@@ -29,14 +41,14 @@ class GridSquare
     @origin = Location.new -180.0, -90.0
     @size = Location.new 360.0, 180.0
 
-    bases = [[?A.ord,18], ["0".ord,10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10], [?A.ord,24], ["0".ord, 10]]
+    radixes = RadixEnumerator.new
     loc = @grid_reference.dup.upcase
     while loc.length > 0
       lng, lat, loc = loc.split(//, 3)
-      base, size = *bases.shift
+      zero, radix = *radixes.next
 
-      @size /= size
-      @origin += Location.new(@size.longitude * (lng.ord - base), @size.latitude * (lat.ord - base))
+      @size /= radix
+      @origin += Location.new(@size.longitude * (lng.ord - zero), @size.latitude * (lat.ord - zero))
     end
   end
 
