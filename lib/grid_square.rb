@@ -11,19 +11,24 @@ class GridSquare
     calculate!
   end
 
-  def field
-    raise IndexError.new("GridSquare.square: insufficient precision to index to field") unless grid_reference.length >= 2
-    grid_reference[0..1]
+  # Maidenhead locator names
+  def field; precision 1; end
+  def square; precision 2; end
+  def subsquare; precision 3; end
+  def extended_subsquare; precision 4; end
+
+  # Return code to a given number of 2-digit fields
+  def precision(fields)
+    raise IndexError.new "GridSquare.square: insufficient precision to index #{fields} fields" unless grid_reference.length >= fields * 2
+    downcase_last grid_reference[0...fields*2]
   end
 
-  def square
-    raise IndexError.new("GridSquare.square: insufficient precision to index to square") unless grid_reference.length >= 4
-    grid_reference[0..3]
-  end
-
-  def subsquare
-    raise IndexError.new("GridSquare.square: insufficient precision to index to square") unless grid_reference.length >= 6
-    grid_reference[0..5]
+  def downcase_last(string)
+    if string.length > 4
+      string[0...-4].upcase + string[-4..-1].downcase
+    else
+      string.upcase
+    end
   end
 
   def calculate!
