@@ -1,19 +1,8 @@
 require_relative 'location'
-
+require_relative 'radix_enumerator'
 
 class GridSquare
   attr_reader :grid_reference, :origin
-
-  class RadixEnumerator
-    def next
-      if @enum.nil?
-        @enum = ([["0".ord, 10], [?A.ord, 24]]).cycle
-        [?A.ord, 18]
-      else
-        @enum.next
-      end
-    end
-  end
 
   # location can be a string containing a GS reference or a pair
   # containing longitude and latitude.
@@ -38,15 +27,11 @@ class GridSquare
   end
 
   def calculate!
-    @origin = Location.new -180.0, -90.0
-    @size = Location.new 360.0, 180.0
-
     radixes = RadixEnumerator.new
-    loc = @grid_reference.dup.upcase
-    while loc.length > 0
-      lng, lat, loc = loc.split(//, 3)
-      zero, radix = *radixes.next
+    @origin, @size = Location.new(-180.0, -90.0), Location.new(360.0, 180.0)
 
+    @grid_reference.upcase.chars.each_slice(2) do |lng, lat|
+      zero, radix = *radixes.next
       @size /= radix
       @origin += Location.new(@size.longitude * (lng.ord - zero), @size.latitude * (lat.ord - zero))
     end
