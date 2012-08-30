@@ -6,11 +6,11 @@ class GridSquare
 
   class RadixEnumerator
     def next
-      if @index.nil?
-        @index = 1
+      if @enum.nil?
+        @enum = ([["0".ord, 10], [?A.ord, 24]]).cycle
         [?A.ord, 18]
       else
-        [["0".ord, 10], [?A.ord, 24]][@index = (@index+1) % 2]
+        @enum.next
       end
     end
   end
