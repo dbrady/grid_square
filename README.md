@@ -33,7 +33,7 @@ alternate between base 10 and base 24.
 Here's how it works:
 
 The first two letters of a grid reference express the longitude and
-latitude in base 18 (A through R). This pair of numbers divides up the
+latitude in base 18 (A through R). This pair of letters divides up the
 whole planet into 18 equal "fields", each field being 10 degrees high
 (latitude) and 20 degrees wide (longitude).
 
