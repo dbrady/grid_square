@@ -11,6 +11,27 @@ class GridSquare
     decode!
   end
 
+  def self.encode(longitude, latitude, precision=4 )
+    longitude += 180
+    latitude += 90
+    radixes = RadixEnumerator.new
+    grid_reference = ''
+    size = Location.new(360.0, 180.0)
+    precision.times do
+      zero,radix = *radixes.next
+
+      lng = (radix * longitude / size.longitude).floor
+      lat = (radix * latitude / size.latitude).floor
+
+      grid_reference += "%s%s" % [(zero + lng).chr, (zero + lat).chr]
+      size /= radix
+      longitude -= lng * size.longitude
+      latitude -= lat * size.latitude
+    end
+
+    new downcase_last(grid_reference)
+  end
+
   # Maidenhead locator names
   def field; precision 1; end
   def square; precision 2; end
@@ -24,6 +45,10 @@ class GridSquare
   end
 
   def downcase_last(string)
+    GridSquare.downcase_last string
+  end
+
+  def self.downcase_last(string)
     if string.length > 4
       string[0...-4].upcase + string[-4..-1].downcase
     else

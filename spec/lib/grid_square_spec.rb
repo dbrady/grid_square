@@ -101,4 +101,16 @@ describe GridSquare do
     Then { ludicrous.extended_subsquare.should == "RN91sk59" }
     Then { lambda { ludicrous.precision 301 }.should raise_error(IndexError) }
   end
+
+  describe ".encode" do
+    Given(:grid_square) { GridSquare.encode -111.866785, 40.363840 }
+
+    Then { grid_square.grid_reference.should == "DN40bi57" }
+
+    context "with precision" do
+      Given(:grid_square) { GridSquare.encode -111.866785, 40.363840, 10 }
+
+      Then { grid_square.grid_reference.should == "DN40BI57XH67OE24bd98" }
+    end
+  end
 end
