@@ -6,9 +6,9 @@ class GridSquare
 
   # location can be a string containing a GS reference or a pair
   # containing longitude and latitude.
-  def initialize(location)
-    @grid_reference = location
-    calculate!
+  def initialize(grid_reference)
+    @grid_reference = grid_reference
+    decode!
   end
 
   # Maidenhead locator names
@@ -31,7 +31,7 @@ class GridSquare
     end
   end
 
-  def calculate!
+  def decode!
     radixes = RadixEnumerator.new
     @origin, @size = Location.new(-180.0, -90.0), Location.new(360.0, 180.0)
 
