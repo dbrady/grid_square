@@ -9,7 +9,7 @@ class GridSquare
   # containing longitude and latitude.
   def initialize(grid_reference)
     @grid_reference = grid_reference
-    decode!
+    decode
   end
 
   def self.encode(longitude, latitude, precision=4 )
@@ -40,12 +40,12 @@ class GridSquare
   def extended_subsquare; precision 4; end
 
   # Return code to a given number of 2-digit fields
-  def precision(fields)
-    raise IndexError.new "GridSquare.square: insufficient precision to index #{fields} fields" unless grid_reference.length >= fields * 2
-    grid_reference[0...fields*2].downcase_last
+  def precision(num_fields)
+    raise IndexError.new "GridSquare.square: insufficient precision to index #{num_fields} fields" unless grid_reference.length >= num_fields * 2
+    grid_reference[0...num_fields*2].downcase_last
   end
 
-  def decode!
+  def decode
     radixes = RadixEnumerator.new
     @origin, @size = Location.new(-180.0, -90.0), Location.new(360.0, 180.0)
 
@@ -56,16 +56,21 @@ class GridSquare
     end
   end
 
-  def width
-    @size.longitude
-  end
+  def width; @size.longitude; end
+  def height; @size.latitude; end
 
-  def height
-    @size.latitude
-  end
+  def left; @origin.longitude; end
+  def bottom; @origin.latitude; end
+  def top; (@origin + @size).latitude; end
+  def right; (@origin + @size).longitude; end
+
+  alias :west :left
+  alias :south :bottom
+  alias :east :right
+  alias :north :top
 
   def center
-    Location.new @origin.longitude + width/2.0, @origin.latitude + height/2.0
+    @origin + @size/2
   end
 end
 

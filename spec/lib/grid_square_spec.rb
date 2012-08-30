@@ -11,8 +11,10 @@ describe GridSquare do
     Then { lambda { grid_square.extended_subsquare.should }.should raise_error(IndexError) }
     Then { lambda { grid_square.precision 10 }.should raise_error(IndexError) }
 
-    Then { grid_square.origin.longitude.should be_within(0.00001).of -120.0 }
-    Then { grid_square.origin.latitude.should be_within(0.00001).of 40.0 }
+    Then { grid_square.west.should be_within(0.00001).of -120.0 }
+    Then { grid_square.south.should be_within(0.00001).of 40.0 }
+    Then { grid_square.north.should be_within(0.00001).of 50.0 }
+    Then { grid_square.east.should be_within(0.00001).of -100.0 }
 
     Then { grid_square.width.should be_within(0.00001).of 20.0 }
     Then { grid_square.height.should be_within(0.00001).of 10.0 }
@@ -30,8 +32,8 @@ describe GridSquare do
     Then { lambda { grid_square.extended_subsquare.should }.should raise_error(IndexError) }
     Then { lambda { grid_square.precision 10 }.should raise_error(IndexError) }
 
-    Then { grid_square.origin.longitude.should be_within(0.00001).of -112.0 }
-    Then { grid_square.origin.latitude.should be_within(0.00001).of 41.0 }
+    Then { grid_square.west.should be_within(0.00001).of -112.0 }
+    Then { grid_square.south.should be_within(0.00001).of 41.0 }
 
     Then { grid_square.width.should be_within(0.00001).of 2.0 }
     Then { grid_square.height.should be_within(0.00001).of 1.0 }
@@ -49,8 +51,8 @@ describe GridSquare do
     Then { lambda { grid_square.extended_subsquare.should }.should raise_error(IndexError) }
     Then { lambda { grid_square.precision 10 }.should raise_error(IndexError) }
 
-    Then { grid_square.origin.longitude.should be_within(0.00001).of -111.91666 }
-    Then { grid_square.origin.latitude.should be_within(0.00001).of 41.33333 }
+    Then { grid_square.west.should be_within(0.00001).of -111.91666 }
+    Then { grid_square.south.should be_within(0.00001).of 41.33333 }
 
     Then { grid_square.width.should be_within(0.00001).of 0.083333 }
     Then { grid_square.height.should be_within(0.00001).of 0.041666 }
@@ -68,8 +70,8 @@ describe GridSquare do
     Then { grid_square.extended_subsquare.should == "DN41bi63" }
     Then { lambda { grid_square.precision 10 }.should raise_error(IndexError) }
 
-    Then { grid_square.origin.longitude.should be_within(0.00001).of -111.86666 }
-    Then { grid_square.origin.latitude.should be_within(0.00001).of 41.34583 }
+    Then { grid_square.west.should be_within(0.00001).of -111.86666 }
+    Then { grid_square.south.should be_within(0.00001).of 41.34583 }
 
     Then { grid_square.width.should be_within(0.00001).of 0.0083333 }
     Then { grid_square.height.should be_within(0.00001).of 0.0041666 }
